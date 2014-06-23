@@ -98,6 +98,18 @@ namespace TabulaTags
         private void OnWindowUnavailable(object sender, EventArgs e)
         {
             //TODO: disable audio, animations here
+
+        }
+
+
+        private void TagVisualizationDefinition_VisualizationCreated(object sender, TagVisualizationEventArgs e)
+        {
+            if (e.Visualization.VisualizedTag.Value== 248)
+                TV.Background = Brushes.Black;
+            else if (e.Visualization.VisualizedTag.Value == 240)
+                TV.Background = Brushes.Aqua;
+            else if (e.Visualization.VisualizedTag.Value == 249)
+                TV.Background = Brushes.Tomato;
         }
     }
 }
