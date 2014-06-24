@@ -15,6 +15,8 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting; // to use python
 
 namespace TabulaTags
 {
@@ -104,12 +106,36 @@ namespace TabulaTags
 
         private void TagVisualizationDefinition_VisualizationCreated(object sender, TagVisualizationEventArgs e)
         {
-            if (e.Visualization.VisualizedTag.Value== 248)
-                TV.Background = Brushes.Black;
+            if (e.Visualization.VisualizedTag.Value == 248)
+                TV.Background = Brushes.DodgerBlue;
             else if (e.Visualization.VisualizedTag.Value == 240)
                 TV.Background = Brushes.Aqua;
             else if (e.Visualization.VisualizedTag.Value == 249)
                 TV.Background = Brushes.Tomato;
+
+            SurfaceToPython("");
+        }
+
+        private void SurfaceToPython(String message)
+        {
+            var py = Python.CreateEngine();
+            var parameters = new Dictionary<string, object>(){
+                {"message", message}};
+            var scope = py.CreateScope(parameters);
+            var script = py.CreateScriptSourceFromFile("script.py");
+            
+            try
+            {
+                //engine.Sys.argv = List.Make(args);
+                //py.ExecuteFile("script.py");
+                script.Execute(scope);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(
+                   "exception" + ex.Message);
+            }
+
         }
     }
 }
