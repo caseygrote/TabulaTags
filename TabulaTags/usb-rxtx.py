@@ -7,6 +7,7 @@
 import usb # expects PyUSB (http://pyusb.sourceforge.net) to be installed
 import sys
 
+
 SIFTEO_VID  = 0x22fa
 BASE_PID    = 0x0105
 
@@ -64,6 +65,7 @@ def receive(dev, timeout=500):
 
     return type, msg[4:]
 
+
 dev = find_and_open()
 b = 0
 while True:
@@ -73,5 +75,4 @@ while True:
 
     type, payload = receive(dev)
     if len(payload) >= 3:
-##        print "accel:", payload[0], payload[1], payload[2]
-
+        print(repr(payload[0]) + ' ' + repr(payload[1])+ ' ' + repr(payload[2]))

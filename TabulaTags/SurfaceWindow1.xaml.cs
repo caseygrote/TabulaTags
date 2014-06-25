@@ -113,7 +113,7 @@ namespace TabulaTags
             else if (e.Visualization.VisualizedTag.Value == 249)
                 TV.Background = Brushes.Tomato;
 
-            SurfaceToPython("");
+            SurfaceToPython("ok");
         }
 
         private void SurfaceToPython(String message)
@@ -122,13 +122,17 @@ namespace TabulaTags
             var parameters = new Dictionary<string, object>(){
                 {"message", message}};
             var scope = py.CreateScope(parameters);
+            scope.SetVariable("myAssembly", System.Reflection.Assembly.GetExecutingAssembly());
+
             var script = py.CreateScriptSourceFromFile("script.py");
+            
             
             try
             {
                 //engine.Sys.argv = List.Make(args);
                 //py.ExecuteFile("script.py");
                 script.Execute(scope);
+                var result = (string)scope.GetVariable("outVar");
             }
             catch (Exception ex)
             {
@@ -136,6 +140,11 @@ namespace TabulaTags
                    "exception" + ex.Message);
             }
 
+        }
+
+        public static void testStatic(String s)
+        {
+            string breakpoint = s + " ok!";
         }
     }
 }
