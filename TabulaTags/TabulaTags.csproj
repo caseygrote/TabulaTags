@@ -111,6 +111,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PhythonWorker.cs" />
     <Compile Include="Responder.xaml.cs">
       <DependentUpon>Responder.xaml</DependentUpon>
     </Compile>

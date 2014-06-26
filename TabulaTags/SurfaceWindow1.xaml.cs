@@ -17,7 +17,8 @@ using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
-using System.Dynamic; // to use python
+using System.Dynamic;
+using System.Threading; // to use python
 
 namespace TabulaTags
 {
@@ -47,6 +48,9 @@ namespace TabulaTags
             scope.form = this;
             // add the proxy to the scope
             scope.proxy = CreateProxy();
+
+
+            startLoop();
 
         }
 
@@ -203,6 +207,17 @@ namespace TabulaTags
 
 
 
+        }
+
+        private void startLoop()
+        {
+            //Worker workerObject = new Worker();
+            //Thread workerThread = new Thread(workerObject.DoWork);
+            PhythonWorker worker = new PhythonWorker();
+            Thread t = new Thread(worker.theThing);
+            t.Start();
+            while (!t.IsAlive) ;
+            
         }
 
         public void ShowMessage(string s)
