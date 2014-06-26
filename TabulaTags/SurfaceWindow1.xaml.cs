@@ -16,7 +16,8 @@ using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using IronPython.Hosting;
-using Microsoft.Scripting.Hosting; // to use python
+using Microsoft.Scripting.Hosting;
+using System.Dynamic; // to use python
 
 namespace TabulaTags
 {
@@ -25,6 +26,10 @@ namespace TabulaTags
     /// </summary>
     public partial class SurfaceWindow1 : SurfaceWindow
     {
+
+        private readonly ScriptEngine m_engine;
+        private readonly ScriptScope m_scope;
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -34,6 +39,24 @@ namespace TabulaTags
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
+
+            m_engine = Python.CreateEngine();
+
+            dynamic scope = m_scope = m_engine.CreateScope();
+            // add this form to the scope
+            scope.form = this;
+            // add the proxy to the scope
+            scope.proxy = CreateProxy();
+
+        }
+
+        private dynamic CreateProxy()
+        {
+            // let's expose all methods we want to access from a script
+            dynamic proxy = new ExpandoObject();
+            proxy.ShowMessage = new Action<string>(ShowMessage);
+            //proxy.MyPrivateFunction = new Func<int>(MyPrivateFunction);
+            return proxy;
         }
 
         /// <summary>
@@ -109,11 +132,17 @@ namespace TabulaTags
             if (e.Visualization.VisualizedTag.Value == 248)
                 TV.Background = Brushes.DodgerBlue;
             else if (e.Visualization.VisualizedTag.Value == 240)
+            {
                 TV.Background = Brushes.Aqua;
+                PythonToSurface();
+            }
             else if (e.Visualization.VisualizedTag.Value == 249)
+            {
                 TV.Background = Brushes.Tomato;
+                SurfaceToPython("ok");
+            }
 
-            SurfaceToPython("ok");
+            
         }
 
         private void SurfaceToPython(String message)
@@ -142,9 +171,50 @@ namespace TabulaTags
 
         }
 
+
+        private void PythonToSurface() {
+          
+           // var py = Python.CreateEngine();
+            //var parameters = new Dictionary<string, object>(){
+             //   {"message", "check"}};
+           // var scope = py.CreateScope(parameters);
+            m_scope.SetVariable("myAssembly", System.Reflection.Assembly.GetExecutingAssembly());
+            m_scope.SetVariable("RESPONSE", RESPONSE);
+
+            var script = m_engine.CreateScriptSourceFromFile("script.py");
+
+            
+
+
+            try
+            {
+                //engine.Sys.argv = List.Make(args);
+                //py.ExecuteFile("script.py");
+                string s = script.GetCode();
+                m_engine.Execute(s, m_scope);
+               // script.Execute(scope);
+                //var result = (string)m_scope.GetVariable("outVar");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(
+                   "exception" + ex.Message);
+            }
+
+
+
+        }
+
+        public void ShowMessage(string s)
+        {
+            RESPONSE.show(s);
+        }
+
         public static void testStatic(String s)
         {
             string breakpoint = s + " ok!";
         }
+
+        
     }
 }
