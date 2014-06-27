@@ -30,7 +30,8 @@ namespace TabulaTags
 
         private readonly ScriptEngine m_engine;
         private readonly ScriptScope m_scope;
-
+        PhythonWorker worker;
+        Thread t;
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -213,8 +214,9 @@ namespace TabulaTags
         {
             //Worker workerObject = new Worker();
             //Thread workerThread = new Thread(workerObject.DoWork);
-            PhythonWorker worker = new PhythonWorker();
-            Thread t = new Thread(worker.theThing);
+            worker = new PhythonWorker();
+            t = new Thread(worker.theThing);
+            Thread.Sleep(1000);
             t.Start();
             while (!t.IsAlive) ;
             

@@ -4,8 +4,9 @@
 # Simple PyUSB demo to interact with the Sifteo SDK USB example.
 #
 
-import usb # expects PyUSB (http://pyusb.sourceforge.net) to be installed
 import sys
+import usb # expects PyUSB (http://pyusb.sourceforge.net) to be installed
+
 
 
 SIFTEO_VID  = 0x22fa

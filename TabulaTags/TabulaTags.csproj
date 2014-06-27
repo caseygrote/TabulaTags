@@ -145,16 +145,191 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="abc.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="atexit.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="collections.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="copy.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ctypes\macholib\dyld.py" />
+    <Content Include="ctypes\macholib\dylib.py" />
+    <Content Include="ctypes\macholib\framework.py" />
+    <Content Include="ctypes\macholib\__init__.py" />
+    <Content Include="ctypes\test\runtests.py" />
+    <Content Include="ctypes\test\test_anon.py" />
+    <Content Include="ctypes\test\test_arrays.py" />
+    <Content Include="ctypes\test\test_array_in_pointer.py" />
+    <Content Include="ctypes\test\test_as_parameter.py" />
+    <Content Include="ctypes\test\test_bitfields.py" />
+    <Content Include="ctypes\test\test_buffers.py" />
+    <Content Include="ctypes\test\test_byteswap.py" />
+    <Content Include="ctypes\test\test_callbacks.py" />
+    <Content Include="ctypes\test\test_cast.py" />
+    <Content Include="ctypes\test\test_cfuncs.py" />
+    <Content Include="ctypes\test\test_checkretval.py" />
+    <Content Include="ctypes\test\test_delattr.py" />
+    <Content Include="ctypes\test\test_errcheck.py" />
+    <Content Include="ctypes\test\test_errno.py" />
+    <Content Include="ctypes\test\test_find.py" />
+    <Content Include="ctypes\test\test_frombuffer.py" />
+    <Content Include="ctypes\test\test_funcptr.py" />
+    <Content Include="ctypes\test\test_functions.py" />
+    <Content Include="ctypes\test\test_incomplete.py" />
+    <Content Include="ctypes\test\test_init.py" />
+    <Content Include="ctypes\test\test_integers.py" />
+    <Content Include="ctypes\test\test_internals.py" />
+    <Content Include="ctypes\test\test_keeprefs.py" />
+    <Content Include="ctypes\test\test_libc.py" />
+    <Content Include="ctypes\test\test_loading.py" />
+    <Content Include="ctypes\test\test_macholib.py" />
+    <Content Include="ctypes\test\test_memfunctions.py" />
+    <Content Include="ctypes\test\test_numbers.py" />
+    <Content Include="ctypes\test\test_objects.py" />
+    <Content Include="ctypes\test\test_parameters.py" />
+    <Content Include="ctypes\test\test_pep3118.py" />
+    <Content Include="ctypes\test\test_pickling.py" />
+    <Content Include="ctypes\test\test_pointers.py" />
+    <Content Include="ctypes\test\test_prototypes.py" />
+    <Content Include="ctypes\test\test_python_api.py" />
+    <Content Include="ctypes\test\test_random_things.py" />
+    <Content Include="ctypes\test\test_refcounts.py" />
+    <Content Include="ctypes\test\test_repr.py" />
+    <Content Include="ctypes\test\test_returnfuncptrs.py" />
+    <Content Include="ctypes\test\test_simplesubclasses.py" />
+    <Content Include="ctypes\test\test_sizes.py" />
+    <Content Include="ctypes\test\test_slicing.py" />
+    <Content Include="ctypes\test\test_stringptr.py" />
+    <Content Include="ctypes\test\test_strings.py" />
+    <Content Include="ctypes\test\test_structures.py" />
+    <Content Include="ctypes\test\test_struct_fields.py" />
+    <Content Include="ctypes\test\test_unaligned_structures.py" />
+    <Content Include="ctypes\test\test_unicode.py" />
+    <Content Include="ctypes\test\test_values.py" />
+    <Content Include="ctypes\test\test_varsize_struct.py" />
+    <Content Include="ctypes\test\test_win32.py" />
+    <Content Include="ctypes\test\test_wintypes.py" />
+    <Content Include="ctypes\test\__init__.py" />
+    <Content Include="ctypes\util.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ctypes\wintypes.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ctypes\_endian.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ctypes\__init__.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="genericpath.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="heapq.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="keyword.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="linecache.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="logging\config.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="logging\handlers.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="logging\__init__.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="looptest.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ntpath.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="os.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="os2emxpath.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="script.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="stat.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="struct.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="traceback.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="types.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="usb-rxtx.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TabulaTags.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\backend\libusb01.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\backend\libusb10.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\backend\openusb.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\backend\__init__.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\control.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\core.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\legacy.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\util.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\_debug.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\_interop.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="usb\__init__.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UserDict.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="warnings.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="weakref.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="_abcoll.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="_weakrefset.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -180,6 +355,10 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
