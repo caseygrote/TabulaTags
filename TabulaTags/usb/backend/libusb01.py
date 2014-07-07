@@ -48,17 +48,19 @@ _logger = logging.getLogger('usb.backend.libusb01')
 _PC_PATH_MAX = 4
 
 if sys.platform != 'win32' and sys.platform != 'cygwin':
-    _PATH_MAX = os.pathconf('.', _PC_PATH_MAX)
+    #_PATH_MAX = os.pathconf('.', _PC_PATH_MAX)
+	#_PATH_MAX = os.fpathconf('.', _PC_PATH_MAX)
+	_PATH_MAX = 260
 else:
 	_PATH_MAX = 511
-
+#outvar = 'check0'
 # libusb-win32 makes all structures packed, while
 # default libusb only does for some structures
 # _PackPolicy defines the structure packing according
 # to the platform.
 class _PackPolicy(object):
     pass
-
+#outvar = 'check1'
 if sys.platform == 'win32' or sys.platform == 'cygwin':
     _PackPolicy._pack_ = 1
 
@@ -160,7 +162,7 @@ _usb_bus._fields_ = [('next', POINTER(_usb_bus)),
                     ('root_dev', POINTER(_usb_device))]
 
 _usb_dev_handle = c_void_p
-
+#outvar = 'check2'
 class _DeviceDescriptor:
     def __init__(self, dev):
         desc = dev.descriptor

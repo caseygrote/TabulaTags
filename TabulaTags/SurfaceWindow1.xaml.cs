@@ -30,7 +30,7 @@ namespace TabulaTags
 
         private readonly ScriptEngine m_engine;
         private readonly ScriptScope m_scope;
-        PhythonWorker worker;
+        PythonWorker worker;
         Thread t;
         /// <summary>
         /// Default constructor.
@@ -146,8 +146,6 @@ namespace TabulaTags
                 TV.Background = Brushes.Tomato;
                 SurfaceToPython("ok");
             }
-
-            
         }
 
         private void SurfaceToPython(String message)
@@ -157,6 +155,7 @@ namespace TabulaTags
                 {"message", message}};
             var scope = py.CreateScope(parameters);
             scope.SetVariable("myAssembly", System.Reflection.Assembly.GetExecutingAssembly());
+            scope.SetVariable("RESPONSE", RESPONSE);
 
             var script = py.CreateScriptSourceFromFile("script.py");
             
@@ -214,7 +213,9 @@ namespace TabulaTags
         {
             //Worker workerObject = new Worker();
             //Thread workerThread = new Thread(workerObject.DoWork);
-            worker = new PhythonWorker();
+            worker = new PythonWorker();
+            worker.RESPONSE = this.RESPONSE;
+            worker.d = this.Dispatcher;
             t = new Thread(worker.theThing);
             Thread.Sleep(1000);
             t.Start();

@@ -31,10 +31,7 @@ def find_and_open():
 
     return dev
 
-def send(dev, bytes, timeout = 1000):
-    """
-    Write a byte array to the device.
-    """
+
 
     # Ensure that our message will be dispatched appropriately by the base.
     # Highest 4 bits specify the subsystem, user subsystem is 7.
