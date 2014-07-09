@@ -15,7 +15,6 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
-using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using System.Dynamic;
 using System.Threading; // to use python
@@ -42,13 +41,13 @@ namespace TabulaTags
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
 
-            m_engine = Python.CreateEngine();
+            //m_engine = Python.CreateEngine();
 
-            dynamic scope = m_scope = m_engine.CreateScope();
-            // add this form to the scope
-            scope.form = this;
-            // add the proxy to the scope
-            scope.proxy = CreateProxy();
+            //dynamic scope = m_scope = m_engine.CreateScope();
+            //// add this form to the scope
+            //scope.form = this;
+            //// add the proxy to the scope
+            //scope.proxy = CreateProxy();
 
 
             startLoop();
@@ -139,75 +138,15 @@ namespace TabulaTags
             else if (e.Visualization.VisualizedTag.Value == 240)
             {
                 TV.Background = Brushes.Aqua;
-                PythonToSurface();
+                //PythonToSurface();
             }
             else if (e.Visualization.VisualizedTag.Value == 249)
             {
                 TV.Background = Brushes.Tomato;
-                SurfaceToPython("ok");
+                //SurfaceToPython("ok");
             }
         }
 
-        private void SurfaceToPython(String message)
-        {
-            var py = Python.CreateEngine();
-            var parameters = new Dictionary<string, object>(){
-                {"message", message}};
-            var scope = py.CreateScope(parameters);
-            scope.SetVariable("myAssembly", System.Reflection.Assembly.GetExecutingAssembly());
-            scope.SetVariable("RESPONSE", RESPONSE);
-
-            var script = py.CreateScriptSourceFromFile("script.py");
-            
-            
-            try
-            {
-                //engine.Sys.argv = List.Make(args);
-                //py.ExecuteFile("script.py");
-                script.Execute(scope);
-                var result = (string)scope.GetVariable("outVar");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(
-                   "exception" + ex.Message);
-            }
-
-        }
-
-
-        private void PythonToSurface() {
-          
-           // var py = Python.CreateEngine();
-            //var parameters = new Dictionary<string, object>(){
-             //   {"message", "check"}};
-           // var scope = py.CreateScope(parameters);
-            m_scope.SetVariable("myAssembly", System.Reflection.Assembly.GetExecutingAssembly());
-            m_scope.SetVariable("RESPONSE", RESPONSE);
-
-            var script = m_engine.CreateScriptSourceFromFile("script.py");
-
-            
-
-
-            try
-            {
-                //engine.Sys.argv = List.Make(args);
-                //py.ExecuteFile("script.py");
-                string s = script.GetCode();
-                m_engine.Execute(s, m_scope);
-               // script.Execute(scope);
-                //var result = (string)m_scope.GetVariable("outVar");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(
-                   "exception" + ex.Message);
-            }
-
-
-
-        }
 
         private void startLoop()
         {

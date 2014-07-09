@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using IronPython.Hosting;
 using System.Windows.Threading;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
@@ -142,43 +141,6 @@ namespace TabulaTags
         #endregion
 
    
-
-        #region old python worker code
-        //
-        //public void pystuff()
-        //{
-        //    var py = Python.CreateEngine();
-        //    var parameters = new Dictionary<string, object>(){
-        //        {"outvar", "ok"}};
-        //    var scope = py.CreateScope(parameters);
-        //    scope.SetVariable("myAssembly", System.Reflection.Assembly.GetExecutingAssembly());
-
-        //    //scope.SetVariable("RESPONSE", RESPONSE);///////////////////////////////////////////////////need to get parent  (o, ef)
-        //    scope.SetVariable("PyWo", this);
-        //    //var paths = py.GetSearchPaths();
-        //    //paths.Add(@"C:\Python27\Lib\site-packages");
-        //    //paths.Add(@"C:\Python27\Lib");
-        //    //py.SetSearchPaths(paths);
-
-        //    var script = py.CreateScriptSourceFromFile("script.py");
-
-
-
-        //    try
-        //    {
-        //        //engine.Sys.argv = List.Make(args);
-        //        //py.ExecuteFile("script.py");
-        //        script.Execute(scope); //should loop a long time ??
-        //        //var result = (string)scope.GetVariable("outVar");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //var result = (string)scope.GetVariable("outVar");
-        //        Console.WriteLine(
-        //           "exception" + ex.Message);
-        //    }
-        //}
-        #endregion
 
     }
 }
