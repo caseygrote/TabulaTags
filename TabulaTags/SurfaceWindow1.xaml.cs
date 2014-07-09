@@ -30,7 +30,7 @@ namespace TabulaTags
 
         private readonly ScriptEngine m_engine;
         private readonly ScriptScope m_scope;
-        PythonWorker worker;
+        TransmissionWorker worker;
         Thread t;
         /// <summary>
         /// Default constructor.
@@ -213,7 +213,7 @@ namespace TabulaTags
         {
             //Worker workerObject = new Worker();
             //Thread workerThread = new Thread(workerObject.DoWork);
-            worker = new PythonWorker();
+            worker = new TransmissionWorker();
             worker.RESPONSE = this.RESPONSE;
             worker.d = this.Dispatcher;
             t = new Thread(worker.theThing);

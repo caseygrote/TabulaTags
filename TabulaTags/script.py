@@ -26,11 +26,11 @@ USER_SUBSYS = 7
 def find_and_open():
     dev = usb.core.find(idVendor = SIFTEO_VID, idProduct = BASE_PID)
     if dev is None:
-        PyWo.display('Device is not connected\n')
+        PyWo.display(str(usb.core.find()))
         #PyWo.showthing()
     while dev is None:
         #PyWo.showthing()
-        sys.stderr.write('Device is not connected\n')
+        PyWo.display(str(usb.core.find()))
         #sys.exit(1)
         dev = usb.core.find(idVendor = SIFTEO_VID, idProduct = BASE_PID)
     PyWo.display('Device is connected\n')

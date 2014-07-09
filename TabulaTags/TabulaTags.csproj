@@ -65,6 +65,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\IronPython 2.7\DLLs\IronPython.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="LibUsbDotNet">
+      <HintPath>..\..\..\..\..\..\Program Files\LibUsbDotNet\LibUsbDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\IronPython 2.7\Microsoft.Dynamic.dll</HintPath>
@@ -111,7 +114,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PythonWorker.cs" />
+    <Compile Include="TransmissionWorker.cs" />
     <Compile Include="Responder.xaml.cs">
       <DependentUpon>Responder.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,7 @@
     <Content Include="keyword.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="libusb0.dll" />
     <Content Include="linecache.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
