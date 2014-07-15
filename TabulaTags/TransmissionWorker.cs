@@ -24,41 +24,24 @@ namespace TabulaTags
 
         public Responder RESPONSE { get; set; }
 
-        public static IDeviceNotifier UsbDeviceNotifier = DeviceNotifier.OpenDeviceNotifier();
-
-
-        private static void OnDeviceNotifyEvent(object sender, DeviceNotifyEventArgs e)
-        {
-            // A Device system-level event has occured
-            string s = e.ToString();
-
-            Console.SetCursorPosition(0, Console.CursorTop);
-
-            Console.WriteLine(e.ToString()); // Dump the event info to output.
-
-            Console.WriteLine();
-            Console.Write("[Press any key to exit]");
-        }
+        
       
         public void theThing()
         {
-            //while (true)
-            //    Console.WriteLine("Alpha.Beta is running in its own thread.");
+            
             //pystuff();
-            //UsbGlobals.UsbErrorEvent += UsbErrorEvent;
-            //UsbDevice.UsbErrorEvent += new EventHandler<UsbError>(UsbDevice_UsbErrorEvent);
-
-            UsbDeviceNotifier.OnDeviceNotify += OnDeviceNotifyEvent;
-
-           
-
             find_and_open();
-            CMDSend("ok");
+
+            //testing closing to start
+            try { CMDSend("ok"); }
+            catch (Exception e) { }
           
             
             while (true)
             {
                 display(receive());///////////////////////this loops inside recieve(); should only need to be called again if there is an exception
+                //CMDSend("ok");//testing open close
+
             }
 
         }
@@ -119,37 +102,12 @@ namespace TabulaTags
         public void CMDSend(string message)
         {
 
-           // //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-           // //string envUserName = Environment.UserName;
-           // // Start the child process.
-           // Process p = new Process();
-           // // Redirect the output stream of the child process.
-           // p.StartInfo.UseShellExecute = false;
-           // p.StartInfo.RedirectStandardOutput = true;
-           // p.StartInfo.RedirectStandardError = true;
-           // String dir = Directory.GetCurrentDirectory();
-           // dir = dir.Substring(0, dir.Length - ("/bin/debug".Length - 1));
-           // p.StartInfo.FileName = @"C:\\Python27\\python.exe";
-           // p.StartInfo.Arguments = "";
-           //// p.StartInfo.FileName = "dir";
-           // //p.StartInfo.FileName = "python";
-           // //p.StartInfo.Arguments = dir + "SendScript.py" + " " + message;
-           // //p.StartInfo.Arguments = dir + "Test.py";
-           
-           // p.StartInfo.CreateNoWindow = true;
-           // p.EnableRaisingEvents = true;
-           // p.Start();
-           // // Do not wait for the child process to exit before
-           // // reading to the end of its redirected stream
-           // // Read the output stream first and then wait.
-           // StreamReader s = p.StandardOutput;
-           // string output1 = s.ReadToEnd();
-           // string error = p.StandardError.ReadToEnd();
-           // p.WaitForExit();
-           // string output = p.StandardOutput.ReadToEnd();
-           //// p.WaitForExit();
 
+            
+                UsbDevice.Exit(); //close so that writer can claim interface
+                MyUsbDevice.Close();
 
+            
             Process p = new Process();
             String dir = Directory.GetCurrentDirectory();
             dir = dir.Substring(0, dir.Length - ("/bin/debug".Length - 1));
@@ -168,19 +126,18 @@ namespace TabulaTags
             string error = p.StandardError.ReadToEnd();
             p.WaitForExit();
 
-            Console.WriteLine(output);
+            UsbDevice.Exit(); //close so that writer can claim interface
+            MyUsbDevice.Close();
+
+            find_and_open();//open so that reader can claim interface
 
             if (p.ExitCode != 0)
             {
                 Console.WriteLine(p.ExitCode);
             }
+
+
         }
-
-       
-         // Hook the usb error handler function
- 
-
-
 
         public string receive()
         {
@@ -203,7 +160,7 @@ namespace TabulaTags
                     message = readBuffer[3].ToString() + " " + readBuffer[4].ToString() + " " + readBuffer[5].ToString();
                     display(message);//////////////////////////////////////////////call out here
                     readBuffer = new byte[1024];
-                    
+                    //CMDSend("ok");
                 }
 
                 message=ec.ToString();
