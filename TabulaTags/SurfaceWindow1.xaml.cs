@@ -17,7 +17,8 @@ using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using Microsoft.Scripting.Hosting;
 using System.Dynamic;
-using System.Threading; // to use python
+using System.Threading;
+using LibUsbDotNet.DeviceNotify; // to use python
 
 namespace TabulaTags
 {
@@ -31,6 +32,8 @@ namespace TabulaTags
         private readonly ScriptScope m_scope;
         TransmissionWorker worker;
         Thread t;
+
+     
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -48,7 +51,9 @@ namespace TabulaTags
             //scope.form = this;
             //// add the proxy to the scope
             //scope.proxy = CreateProxy();
+            
 
+            
 
             startLoop();
 

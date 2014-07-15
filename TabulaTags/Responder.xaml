@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Label x:Name="display" Content="responder" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
+        <Label x:Name="display" Content="responder" Height="300" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
     </Grid>
 </UserControl>

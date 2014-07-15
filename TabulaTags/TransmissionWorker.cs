@@ -5,6 +5,10 @@ using System.Text;
 using System.Windows.Threading;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
+using System.Diagnostics;
+using System.IO;
+using LibUsbDotNet.DeviceNotify;
+
 
 namespace TabulaTags
 {
@@ -19,17 +23,42 @@ namespace TabulaTags
         UsbEndpointReader reader; UsbEndpointWriter writer;
 
         public Responder RESPONSE { get; set; }
+
+        public static IDeviceNotifier UsbDeviceNotifier = DeviceNotifier.OpenDeviceNotifier();
+
+
+        private static void OnDeviceNotifyEvent(object sender, DeviceNotifyEventArgs e)
+        {
+            // A Device system-level event has occured
+            string s = e.ToString();
+
+            Console.SetCursorPosition(0, Console.CursorTop);
+
+            Console.WriteLine(e.ToString()); // Dump the event info to output.
+
+            Console.WriteLine();
+            Console.Write("[Press any key to exit]");
+        }
       
         public void theThing()
         {
             //while (true)
             //    Console.WriteLine("Alpha.Beta is running in its own thread.");
             //pystuff();
+            //UsbGlobals.UsbErrorEvent += UsbErrorEvent;
+            //UsbDevice.UsbErrorEvent += new EventHandler<UsbError>(UsbDevice_UsbErrorEvent);
+
+            UsbDeviceNotifier.OnDeviceNotify += OnDeviceNotifyEvent;
+
+           
 
             find_and_open();
+            CMDSend("ok");
+          
+            
             while (true)
             {
-                display(receive());///////////////////////this loops then loops inside; should only need to be called again if there is an exception
+                display(receive());///////////////////////this loops inside recieve(); should only need to be called again if there is an exception
             }
 
         }
@@ -58,27 +87,104 @@ namespace TabulaTags
         #region transmission 
 
 
-        public void send(string p)
+        public int send(string p)
         {
 
-            byte[] message = new byte[p.Length * sizeof(char)];
-            System.Buffer.BlockCopy(p.ToCharArray(), 0, message, 0, message.Length);
-            send(message);
+            //byte[] message = new byte[p.Length * sizeof(char)];
+            //System.Buffer.BlockCopy(p.ToCharArray(), 0, message, 0, message.Length);
+            return send(Encoding.Default.GetBytes(p));
+            //send(message);
         }
 
-        public void send(byte[] message)
+        public int send(byte[] messageBytes)
         {
-            ErrorCode ec = ErrorCode.None;
             int bytesWritten;
+            ErrorCode ec = writer.Write(messageBytes, 3000, out bytesWritten);
+            
+            //UsbError err = 
+            //var v = err.Win32ErrorNumber;
+            
 
-            ec = writer.Write(message, 2000, out bytesWritten);
+            if (ec != ErrorCode.None)
+            {
+                int i = UsbDevice.LastErrorNumber;
+                return i;
+                //throw new Exception(UsbDevice.LastErrorString);
+            }
 
-            if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+            return bytesWritten;
 
         }
+
+        public void CMDSend(string message)
+        {
+
+           // //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+           // //string envUserName = Environment.UserName;
+           // // Start the child process.
+           // Process p = new Process();
+           // // Redirect the output stream of the child process.
+           // p.StartInfo.UseShellExecute = false;
+           // p.StartInfo.RedirectStandardOutput = true;
+           // p.StartInfo.RedirectStandardError = true;
+           // String dir = Directory.GetCurrentDirectory();
+           // dir = dir.Substring(0, dir.Length - ("/bin/debug".Length - 1));
+           // p.StartInfo.FileName = @"C:\\Python27\\python.exe";
+           // p.StartInfo.Arguments = "";
+           //// p.StartInfo.FileName = "dir";
+           // //p.StartInfo.FileName = "python";
+           // //p.StartInfo.Arguments = dir + "SendScript.py" + " " + message;
+           // //p.StartInfo.Arguments = dir + "Test.py";
+           
+           // p.StartInfo.CreateNoWindow = true;
+           // p.EnableRaisingEvents = true;
+           // p.Start();
+           // // Do not wait for the child process to exit before
+           // // reading to the end of its redirected stream
+           // // Read the output stream first and then wait.
+           // StreamReader s = p.StandardOutput;
+           // string output1 = s.ReadToEnd();
+           // string error = p.StandardError.ReadToEnd();
+           // p.WaitForExit();
+           // string output = p.StandardOutput.ReadToEnd();
+           //// p.WaitForExit();
+
+
+            Process p = new Process();
+            String dir = Directory.GetCurrentDirectory();
+            dir = dir.Substring(0, dir.Length - ("/bin/debug".Length - 1));
+            p.StartInfo = new ProcessStartInfo(@"C:\Python27\python.exe", 
+                                                Path.Combine(dir, "SendScript.py")){
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true, 
+                WorkingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)
+            };
+
+            p.Start();
+
+            string output = p.StandardOutput.ReadToEnd();
+            string error = p.StandardError.ReadToEnd();
+            p.WaitForExit();
+
+            Console.WriteLine(output);
+
+            if (p.ExitCode != 0)
+            {
+                Console.WriteLine(p.ExitCode);
+            }
+        }
+
+       
+         // Hook the usb error handler function
+ 
+
+
 
         public string receive()
         {
+            message = "";
             try
             {
 
@@ -88,15 +194,16 @@ namespace TabulaTags
                 while (ec == ErrorCode.None)
                 {
                     int bytesRead;
-                    ec = reader.Read(readBuffer, 100, out bytesRead);
+                    ec = reader.Read(readBuffer, 1000, out bytesRead);
                     //message = Encoding.Default.GetString(readBuffer, 0, bytesRead);
                     //message = readBuffer.ToString();
-
-                    char[] chars = new char[readBuffer.Length / sizeof(char)];
-                    System.Buffer.BlockCopy(readBuffer, 0, chars, 0, readBuffer.Length);
-                    message= new string(chars);
-
+                    //char[] chars = new char[readBuffer.Length / sizeof(char)];
+                    //System.Buffer.BlockCopy(readBuffer, 0, chars, 0, readBuffer.Length);
+                    //message= new string(chars);
+                    message = readBuffer[3].ToString() + " " + readBuffer[4].ToString() + " " + readBuffer[5].ToString();
                     display(message);//////////////////////////////////////////////call out here
+                    readBuffer = new byte[1024];
+                    
                 }
 
                 message=ec.ToString();
@@ -124,15 +231,16 @@ namespace TabulaTags
 
                 // Claim interface #0.
                 wholeUsbDevice.ClaimInterface(0);
+                // open read endpoint 1.
+                reader = MyUsbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
+                
+                // open write endpoint 1.
+                writer = MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep02);
+                
+                //writer = MyUsbDevice.OpenEndpointWriter(new WriteEndpointID());
             }
-
-            // open read endpoint 1.
-            reader = MyUsbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
-
-            // open write endpoint 1.
-            writer = MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep01);
-
             return MyUsbDevice;
+
 
 
         }
