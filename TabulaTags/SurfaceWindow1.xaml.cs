@@ -76,6 +76,8 @@ namespace TabulaTags
         {
             base.OnClosed(e);
 
+            System.IO.File.WriteAllText("debuglog.txt", worker.debugLog);
+
             // Remove handlers for window availability events
             RemoveWindowAvailabilityHandlers();
         }

@@ -24,6 +24,7 @@ namespace TabulaTags
 
         public Responder RESPONSE { get; set; }
 
+        public string debugLog = "start of log \n";
         
       
         public void theThing()
@@ -104,8 +105,8 @@ namespace TabulaTags
 
 
             
-                UsbDevice.Exit(); //close so that writer can claim interface
-                MyUsbDevice.Close();
+            UsbDevice.Exit(); //close so that writer can claim interface
+            MyUsbDevice.Close();
 
             
             Process p = new Process();
@@ -157,8 +158,12 @@ namespace TabulaTags
                     //char[] chars = new char[readBuffer.Length / sizeof(char)];
                     //System.Buffer.BlockCopy(readBuffer, 0, chars, 0, readBuffer.Length);
                     //message= new string(chars);
-                    message = readBuffer[3].ToString() + " " + readBuffer[4].ToString() + " " + readBuffer[5].ToString();
+                    message = readBuffer[0].ToString() + " " + readBuffer[1].ToString() + " " + readBuffer[2].ToString() + " " + readBuffer[3].ToString() + readBuffer[4].ToString() + " " + readBuffer[5].ToString() + " " + readBuffer[5].ToString();
                     display(message);//////////////////////////////////////////////call out here
+                    
+                    if (!message.Contains("TimedOut"))
+                        debugLog += " LOG: " + message;
+
                     readBuffer = new byte[1024];
                     //CMDSend("ok");
                 }
