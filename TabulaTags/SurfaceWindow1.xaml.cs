@@ -15,7 +15,6 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
-using Microsoft.Scripting.Hosting;
 using System.Dynamic;
 using System.Threading;
 using LibUsbDotNet.DeviceNotify; // to use python
@@ -28,8 +27,6 @@ namespace TabulaTags
     public partial class SurfaceWindow1 : SurfaceWindow
     {
 
-        private readonly ScriptEngine m_engine;
-        private readonly ScriptScope m_scope;
         TransmissionWorker worker;
         Thread t;
 
