@@ -143,6 +143,7 @@ namespace TabulaTags
         public string receive()
         {
             message = "";
+            String lastmessage ="";
             try
             {
 
@@ -158,13 +159,20 @@ namespace TabulaTags
                     //char[] chars = new char[readBuffer.Length / sizeof(char)];
                     //System.Buffer.BlockCopy(readBuffer, 0, chars, 0, readBuffer.Length);
                     //message= new string(chars);
-                    message = readBuffer[0].ToString() + " " + readBuffer[1].ToString() + " " + readBuffer[2].ToString() + " " + readBuffer[3].ToString() + readBuffer[4].ToString() + " " + readBuffer[5].ToString() + " " + readBuffer[5].ToString();
+                    String control = readBuffer[4].ToString("X");
+                    message = readBuffer[5].ToString("X") + readBuffer[6].ToString("X");
+                   
+                   // message = readBuffer[0].ToString("X") + " " + readBuffer[1].ToString("X") + " " + readBuffer[2].ToString("X") + " " + readBuffer[3].ToString("X") + readBuffer[4].ToString("X") + " " + readBuffer[5].ToString("X") + " " + readBuffer[6].ToString("X");
                     display(message);//////////////////////////////////////////////call out here
-                    
-                    if (!message.Contains("TimedOut"))
+
+                    if (!ec.ToString().Contains("TimedOut") && (control == "C9") && (lastmessage != message))
+                    {
                         debugLog += " LOG: " + message;
+                        lastmessage = message;
+                    }
 
                     readBuffer = new byte[1024];
+                    
                     //CMDSend("ok");
                 }
 
